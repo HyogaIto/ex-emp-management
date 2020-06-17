@@ -32,7 +32,7 @@ public class Employee {
 	/**特性 */
 	private String characteristics;
 	/**扶養人数 */
-	private Integer deppendentsCount;
+	private Integer dependentsCount;
 	
 	public Employee() {
 		
@@ -53,7 +53,7 @@ public class Employee {
 		this.telephone = telephone;
 		this.salary = salary;
 		this.characteristics = characteristics;
-		this.deppendentsCount = deppendentsCount;
+		this.dependentsCount = deppendentsCount;
 	}
 	
 	
@@ -146,12 +146,12 @@ public class Employee {
 		this.characteristics = characteristics;
 	}
 
-	public Integer getDeppendentsCount() {
-		return deppendentsCount;
+	public Integer getDependentsCount() {
+		return dependentsCount;
 	}
 
-	public void setDeppendentsCount(Integer deppendentsCount) {
-		this.deppendentsCount = deppendentsCount;
+	public void setDependentsCount(Integer deppendentsCount) {
+		this.dependentsCount = deppendentsCount;
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class Employee {
 		return "Employee [id=" + id + ", name=" + name + ", image=" + image + ", gender=" + gender + ", hireDate="
 				+ hireDate + ", mailAddress=" + mailAddress + ", zipCode=" + zipCode + ", address=" + address
 				+ ", telephone=" + telephone + ", salary=" + salary + ", characteristics=" + characteristics
-				+ ", deppendentsCount=" + deppendentsCount + "]";
+				+ ", deppendentsCount=" + dependentsCount + "]";
 	}
 	
 	

@@ -15,7 +15,7 @@ import jp.co.sample.form.LoginForm;
 import jp.co.sample.service.AdministratorService;
 
 /**
- * 管理者登録画面を表示する処理を行う.
+ * 管理者情報を操作するコントローラ.
  * 
  * @author hyoga.ito
  *
@@ -102,10 +102,9 @@ public class AdministratorController {
 		if(administrator==null) {
 			model.addAttribute("error", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
-		}else {
-			session.setAttribute("administorName", administrator.getName());
-			return "forward:/employee/showList";
 		}
+		session.setAttribute("administorName", administrator.getName());
+		return "forward:/employee/showList";
 	}
 
 }
