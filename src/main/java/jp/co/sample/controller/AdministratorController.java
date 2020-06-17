@@ -11,7 +11,6 @@ import jp.co.sample.form.InsertAdministratorForm;
 import jp.co.sample.form.LoginForm;
 import jp.co.sample.service.AdministratorService;
 
-
 /**
  * 管理者登録画面を表示する処理を行う.
  * 
@@ -21,59 +20,56 @@ import jp.co.sample.service.AdministratorService;
 @Controller
 @RequestMapping("/")
 public class AdministratorController {
-	/** serviceへの参照が入る変数  */
+	/** serviceへの参照が入る変数 */
 	@Autowired
 	private AdministratorService administratorService;
-	
+
 	/**
 	 * InsertAdministratorFormオブジェクトをリクエストスコープ に格納する.
 	 * 
-	 * @return フォームオブジェクト
+	 * @return insertAdministaratorフォームオブジェクト
 	 */
 	@ModelAttribute
 	public InsertAdministratorForm setUpInsertAdministratorForm() {
-		InsertAdministratorForm insertAdministratorForm=new InsertAdministratorForm();
+		InsertAdministratorForm insertAdministratorForm = new InsertAdministratorForm();
 		return insertAdministratorForm;
 	}
+
 	/**
 	 * LoginFormオブジェクトパラメータをリクエストスコープ に格納する.
 	 * 
-	 * @return フォームオブジェクト
+	 * @return loginフォームオブジェクト
 	 */
 	@ModelAttribute
 	public LoginForm setUpLoginForm() {
-		LoginForm loginForm =new LoginForm();
+		LoginForm loginForm = new LoginForm();
 		return loginForm;
 	}
-	
 
-	
-	
-	
 	/**
 	 * 管理者登録画面へフォワードする.
 	 * 
-	 * @return　管理者登録画面
+	 * @return 管理者登録画面
 	 */
 	@RequestMapping("/toInsert")
 	public String toInsert() {
 		return "administrator/insert";
 	}
-	
+
 	/**
 	 * 管理者情報を登録する.
 	 * 
 	 * @param insertAdministratorForm 管理者情報
-	 * @return　リダイレクト：ログイン画面
+	 * @return リダイレクト：ログイン画面
 	 */
 	@RequestMapping("/insert")
 	public String insert(InsertAdministratorForm insertAdministratorForm) {
-		Administrator administrator=new Administrator();
+		Administrator administrator = new Administrator();
 		BeanUtils.copyProperties(insertAdministratorForm, administrator);
 		administratorService.insert(administrator);
 		return "redirect:/";
 	}
-	
+
 	/**
 	 * ログイン画面へフォワードする.
 	 * 
@@ -83,8 +79,5 @@ public class AdministratorController {
 	public String toLogin() {
 		return "administrator/login";
 	}
-	
-	
-	
 
 }
