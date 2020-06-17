@@ -1,8 +1,11 @@
 package jp.co.sample.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +26,10 @@ public class AdministratorController {
 	/** serviceへの参照が入る変数 */
 	@Autowired
 	private AdministratorService administratorService;
+	
+	/**	sessionスコープ用の変数 */
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * InsertAdministratorFormオブジェクトをリクエストスコープ に格納する.
@@ -80,6 +87,25 @@ public class AdministratorController {
 	@RequestMapping("/")
 	public String toLogin() {
 		return "administrator/login";
+	}
+	
+	/**
+	 * ログイン判定.
+	 * 
+	 * @param loginForm フォームに入力された内容
+	 * @param model　リクエストスコープ
+	 * @return　従業員情報一覧ページ
+	 */
+	@RequestMapping("/login")
+	public String login(LoginForm loginForm,Model model) {
+		Administrator administrator=administratorService.login(loginForm.getMailAddress(), loginForm.getPassword());
+		if(administrator==null) {
+			model.addAttribute("error", "メールアドレスまたはパスワードが不正です。");
+			return toLogin();
+		}else {
+			session.setAttribute("administorName", administrator.getName());
+			return "forward:/employee/showList";
+		}
 	}
 
 }
