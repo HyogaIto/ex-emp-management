@@ -1,64 +1,91 @@
 package jp.co.sample.repository;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
+
+import jp.co.sample.domain.Employee;
+
 /**
+ *　Employeeテーブルを操作するリポジトリ.
  * @author hyoga.ito
- *管理者情報を表すドメイン
  */
+@Repository
 public class EmployeeRepository {
+	/**
+	 * Employeeオブジェクトを生成するRowMapper.
+	 */
+	private static final RowMapper<Employee> EMPLOYEE_ROW_MAPPER=(rs,i)->{
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setName(rs.getString("name"));
+		employee.setImage(rs.getString("image"));
+		employee.setGender(rs.getString("gender"));
+		employee.setHireDate(rs.getDate("hireDate"));
+		employee.setMailAddress(rs.getString("mailAddress"));
+		employee.setZipCode(rs.getString("zipCode"));
+		employee.setAddress(rs.getString("address"));
+		employee.setTelephone(rs.getString("telephone"));
+		employee.setSalary(rs.getInt("salary"));
+		employee.setCharacteristics(rs.getString("characteristics"));
+		employee.setDeppendentsCount(rs.getInt("deppendentsCount"));
+		return employee;	
+	};
 	
-	/**管理者ID*/
-	private Integer id;
-	/**管理者名*/
-	private String name;
-	/**管理者メールアドレス*/
-	private String mailAddress;
-	/**管理者パスワード*/
-	private String password;
+
+	/** sqlを実行するための変数.　 */
+	@Autowired
+	private NamedParameterJdbcTemplate template;
 	
+	/** テーブル名（employees）　を格納する変数. */
+	private final String TABLE_NAME="employees";
 	
-	public EmployeeRepository(Integer id, String name, String mailAddress, String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.mailAddress = mailAddress;
-		this.password = password;
-	}
-	
-	public EmployeeRepository() {
+	/**
+	 * 従業員一覧を入社日の降順で取得する.
+	 * @return 従業員一覧が格納されたList　従業員が存在しない場合はサイズ0件で返る
+	 */
+	public List<Employee> findAll(){
+		String sql ="select * from "+TABLE_NAME+" order by hire_date desc;";
+		List<Employee> employeeList=template.query(sql, EMPLOYEE_ROW_MAPPER);
+		
+
+		return employeeList;
 		
 	}
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getMailAddress() {
-		return mailAddress;
-	}
-	public void setMailAddress(String mailAddress) {
-		this.mailAddress = mailAddress;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "EmployeeRepository [id=" + id + ", name=" + name + ", mailAddress=" + mailAddress + ", password="
-				+ password + "]";
+	/**
+	 * 主キーから従業員情報を取得する.
+	 * @param id 主キー
+	 * @return 取得した従業員情報　存在しない場合は例外が発生する。
+	 */
+	public Employee load(Integer id) {
+		String sql ="select * from "+TABLE_NAME+"where id=:id;";
+		SqlParameterSource param= new MapSqlParameterSource().addValue("id", id);
+		Employee employee=template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
+		return employee;
+		
 	}
 	
+	/**
+	 * IDの一致する従業員情報を変更する.
+	 * @param employee　変更内容の入った従業員情報
+	 */
+	public void update(Employee employee) {
+		SqlParameterSource param=new BeanPropertySqlParameterSource(employee);
+		String sql ="update "+TABLE_NAME+" set name=:name,image=:image,"
+				+ "gender=:gender,hire_date=:hireDate,mail_address,"
+				+ "zip_code=:zipCode,address=:address,telephone=:telephone,"
+				+ "salary=:salary,characteristics=:characteristics,"
+				+ "dependents_count=:dependentsCount "
+				+ "where id=:id;";
+		template.update(sql, param);
+	}
 	
 
 }
