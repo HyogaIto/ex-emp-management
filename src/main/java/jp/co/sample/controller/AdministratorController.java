@@ -63,6 +63,7 @@ public class AdministratorController {
 	 * @param insertAdministratorForm 管理者情報
 	 * @return リダイレクト：ログイン画面
 	 */
+
 	@RequestMapping("/insert")
 	public String insert(InsertAdministratorForm insertAdministratorForm) {
 		Administrator administrator = new Administrator();
