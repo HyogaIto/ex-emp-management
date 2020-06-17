@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 import jp.co.sample.domain.Employee;
 
 /**
- *　Employeeテーブルを操作するリポジトリ.
+ *　employeesテーブルを操作するリポジトリ.
+ *
  * @author hyoga.ito
  */
 @Repository
@@ -48,10 +49,13 @@ public class EmployeeRepository {
 	
 	/**
 	 * 従業員一覧を入社日の降順で取得する.
+	 * 
 	 * @return 従業員一覧が格納されたList　従業員が存在しない場合はサイズ0件で返る
 	 */
 	public List<Employee> findAll(){
-		String sql ="select * from "+TABLE_NAME+" order by hire_date desc;";
+		String sql ="select id,name,image,gender,hire_date,mail_address,zip_code,"
+				+ "address,telephone,salary,characteristics,dependnts_count"
+				+ " from "+TABLE_NAME+" order by hire_date desc;";
 		List<Employee> employeeList=template.query(sql, EMPLOYEE_ROW_MAPPER);
 		
 
@@ -61,11 +65,14 @@ public class EmployeeRepository {
 	
 	/**
 	 * 主キーから従業員情報を取得する.
+	 * 
 	 * @param id 主キー
 	 * @return 取得した従業員情報　存在しない場合は例外が発生する。
 	 */
 	public Employee load(Integer id) {
-		String sql ="select * from "+TABLE_NAME+"where id=:id;";
+		String sql ="select  id,name,image,gender,hire_date,mail_address,zip_code," 
+				+"address,telephone,salary,characteristics,dependnts_count"
+				+" from "+TABLE_NAME+"where id=:id;";
 		SqlParameterSource param= new MapSqlParameterSource().addValue("id", id);
 		Employee employee=template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
 		return employee;
@@ -74,6 +81,7 @@ public class EmployeeRepository {
 	
 	/**
 	 * IDの一致する従業員情報を変更する.
+	 * 
 	 * @param employee　変更内容の入った従業員情報
 	 */
 	public void update(Employee employee) {

@@ -1,8 +1,9 @@
 package jp.co.sample.domain;
 
 /**
+ * 管理者情報を表すドメイン
+ *
  * @author hyoga.ito
- *管理者情報を表すドメイン
  */
 public class Administrator {
 	/** 管理者ID */

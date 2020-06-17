@@ -14,8 +14,9 @@ import jp.co.sample.domain.Administrator;
 
 
 /**
- * @author hyoga.ito
  *administatorsテーブルを操作するリポジトリ.
+ *
+ * @author hyoga.ito
  */
 @Repository
 public class AdministratorRepository {
@@ -40,8 +41,9 @@ public class AdministratorRepository {
 	private final String TABLE_NAME="administrators";
 	
 	/**
-	 * @param administrator
 	 * 管理者情報を挿入するメソッド.
+	 * 
+	 * @param administrator 管理者情報
 	 */
 	public void insert(Administrator administrator) {
 		SqlParameterSource param=new BeanPropertySqlParameterSource(administrator);
@@ -53,9 +55,10 @@ public class AdministratorRepository {
 	
 	/**
 	 *メールアドレスとパスワードから管理者情報を取得するメソッド.
+	 *
 	 * @param mailAddress　管理者メールアドレス
 	 * @param password　管理者パスワード
-	 * @return　管理者が存在する場合はadministratorオブジェクトを、しない場合はnullを返す
+	 * @return　管理者が存在する場合は管理者情報を、しない場合はnullを返す
 	 */
 	public Administrator findByMailAddressAndPassword(String mailAddress,String password) {
 		String sql ="select (id,name,mail_address,password) from "+TABLE_NAME+" "
