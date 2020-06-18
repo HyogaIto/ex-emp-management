@@ -10,7 +10,7 @@ import jp.co.sample.domain.Employee;
 import jp.co.sample.repository.EmployeeRepository;
 
 /**
- * 従業員情報を取得する.
+ * 従業員情報を操作するサービス.
  * 
  * @author hyoga.ito
  *
