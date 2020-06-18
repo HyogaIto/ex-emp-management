@@ -103,7 +103,7 @@ public class AdministratorController {
 			model.addAttribute("error", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
 		}
-		session.setAttribute("administorName", administrator.getName());
+		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";
 	}
 	
