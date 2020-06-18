@@ -106,5 +106,16 @@ public class AdministratorController {
 		session.setAttribute("administorName", administrator.getName());
 		return "forward:/employee/showList";
 	}
+	
+	/**
+	 * ログアウト処理を行う.
+	 * 
+	 * @return リダイレクト：ログイン画面
+	 */
+	@RequestMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/"; 
+	}
 
 }
