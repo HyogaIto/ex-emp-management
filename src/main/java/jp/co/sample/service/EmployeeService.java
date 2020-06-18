@@ -10,7 +10,7 @@ import jp.co.sample.domain.Employee;
 import jp.co.sample.repository.EmployeeRepository;
 
 /**
- * 従業員情報一覧を全件検索する.
+ * 従業員情報を取得する.
  * 
  * @author hyoga.ito
  *
@@ -30,6 +30,17 @@ public class EmployeeService {
 	public List<Employee> showList(){
 		List<Employee> employeeList=employeeRepository.findAll();
 		return employeeList;
+	}
+	
+	/**
+	 * 指定の従業員情報を取得する.
+	 * 
+	 * @param id　従業員ID
+	 * @return　取得した従業員情報
+	 */
+	public Employee showDetail(Integer id) {
+		Employee employee= employeeRepository.load(id);
+		return employee;
 	}
 
 }

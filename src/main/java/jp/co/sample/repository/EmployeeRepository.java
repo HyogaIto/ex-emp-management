@@ -72,7 +72,7 @@ public class EmployeeRepository {
 	public Employee load(Integer id) {
 		String sql ="select  id,name,image,gender,hire_date,mail_address,zip_code," 
 				+"address,telephone,salary,characteristics,dependents_count"
-				+" from "+TABLE_NAME+"where id=:id;";
+				+" from "+TABLE_NAME+" where id=:id;";
 		SqlParameterSource param= new MapSqlParameterSource().addValue("id", id);
 		Employee employee=template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
 		return employee;
